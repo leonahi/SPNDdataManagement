@@ -58,5 +58,5 @@ def read_SPND(fileName, databaseName, tableName):
     
 if __name__ == '__main__':
   pass
-  read_SPND("13 F78-84.txt", "13F78-84.db", "sensor")
+  #read_SPND("13 F78-84.txt", "13F78-84.db", "sensor")
   

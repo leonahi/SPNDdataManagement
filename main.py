@@ -28,6 +28,7 @@ print("Reading files {}, {}............".format(args.filename_1, args.filename_2
 if args.createjoin:
   print("Creating Database - 1.............")
   databaseName1 = create_database_name(args.filename_1)
+  print(args.filename_1)
   read_SPND(args.filename_1, databaseName1, "sensor")
 
   print("Creating Database - 2.............")
@@ -37,7 +38,7 @@ if args.createjoin:
   databaseName3 = join_database_name(databaseName1, databaseName2)
   print("Joining Database - 1 and Database -2..............")
   join_database(databaseName1, databaseName2, databaseName3)
-  print("Joining Database: Completed..........")
+  print("Creating & Joining Database: Completed..........")
 
 elif args.join:
   databaseName1 = create_database_name(args.filename_1)
@@ -46,3 +47,4 @@ elif args.join:
 
   print("Joining Database - 1 and Database -2..............")
   join_database(args.filename_1, args.filename_2, databaseName3)
+  print("Joining Database: Completed..........")
