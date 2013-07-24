@@ -67,11 +67,11 @@ class GUI():
     b.grid(column=col, row=row, padx=padx, pady=pady)
     
   def createjoin(self):
-    self.opt.append("--createjoin")
+    self.opt = "--createjoin"
     self.compute()
     
   def join(self):
-    self.opt.append("--join")
+    self.opt = "--join"
     self.compute()
     
   def quit(self, event=None):
@@ -91,7 +91,8 @@ class GUI():
     subprocess.call(["sqlitebrowser", "{}".format(os.path.join(os.path.split(self.filename1)[0], self.label_str3.get())) ])
         
   def compute(self):
-    operation = ["python3.2", "main.py"] + self.opt
+    operation = ["python3.2", "main.py"]
+    operation.append(self.opt)
     operation.append(self.filename1)
     operation.append(self.filename2)
     subprocess.call(operation)
