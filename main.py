@@ -1,6 +1,5 @@
 # Main file that creates and joins database file(*.db) from SPND sensor data file(*.txt)
 
-
 import argparse
 import os
 from create_database import read_SPND
@@ -28,7 +27,6 @@ print("Reading files {}, {}............".format(args.filename_1, args.filename_2
 if args.createjoin:
   print("Creating Database - 1.............")
   databaseName1 = create_database_name(args.filename_1)
-  print(args.filename_1)
   read_SPND(args.filename_1, databaseName1, "sensor")
 
   print("Creating Database - 2.............")

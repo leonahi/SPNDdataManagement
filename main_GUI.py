@@ -8,8 +8,8 @@ import subprocess
 class GUI():
   
   file_opt = {}
-  row_counter = 0
   opt = []
+  row_counter = 0
   filename1 = ""
   filename2 = ""
   
