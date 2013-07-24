@@ -66,15 +66,6 @@ class GUI():
     self.createButton(parent=parent, label="View O/P db file", command=self.viewdb, col=2, row=3, padx=20, pady=20, bd=3)
     self.createButton(parent=parent, label="     Quit       ", command=self.quit, col=3, row=3, padx=20, pady=20, bd=3)
     
-    '''
-    self.sensorDropdown = Pmw.ComboBox(parent,
-                label_text = 'Select SPND No.',
-                labelpos = 'n',
-                selectioncommand = self.viewPlot,
-                scrolledlist_items = self.sensorNames,
-        )
-    self.sensorDropdown.grid(column=5, row=0)
-    '''
     self.scrollbar = Scrollbar(parent)
     self.scrollbar.grid(column=5, row=0)
     self.sensorListbox = Listbox(parent, height=5, width=9, yscrollcommand=self.scrollbar.set)
@@ -127,10 +118,11 @@ class GUI():
         self.sensorListbox.insert(END, item)
   
   def viewPlot(self):
-    print(self.sensorListbox.curselection())
-    operation = ["python3.2", ""]
-    
-  
+    operation = ["python3.2", "main.py", "--plot"]
+    operation.append(self.databaseName)
+    operation.append(self.sensorNames[int( self.sensorListbox.curselection()[0] )])
+    subprocess.call(operation)
+      
   def viewdb(self):
     subprocess.call(["sqlitebrowser", "{}".format(os.path.join(os.path.split(self.filename1)[0], self.label_str3.get())) ])
         
