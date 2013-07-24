@@ -15,9 +15,14 @@ def get_columnNames(databaseName):
 def get_data(databaseName, sensorName):
   con = lite.connect(databaseName)
   
-  with con:
-    cur = con.cursor()
-    cur.execute("SELECT {} FROM sensor".format(sensorName))    
-    col = cur.fetchall()
-    return col
+  columnNames = get_columnNames(databaseName)
+  if sensorName in columnNames:
+    with con:
+      cur = con.cursor()
+      cur.execute("SELECT {} FROM sensor".format(sensorName))    
+      col = cur.fetchall()
+      return col
+  else:
+    print("Error: Sensor name is not a valid sensor name")
+    return None
   
