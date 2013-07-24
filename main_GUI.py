@@ -6,8 +6,8 @@ import os
 import sys
 import subprocess
 
-dir_scr_GUI = os.path.join(os.getcwd(), "scr_GUI")
-sys.path.insert(0, dir_scr_GUI)
+dir_scr = os.path.join(os.getcwd(), "scr")
+sys.path.insert(0, dir_scr)
 
 from get_SPND_col import get_columnNames, get_data
 
@@ -15,6 +15,7 @@ from get_SPND_col import get_columnNames, get_data
 class GUI():
   
   file_opt = {}
+  file_opt_DB = {}
   opt = []
   row_counter = 0
   filename1 = ""
@@ -29,6 +30,9 @@ class GUI():
     self.file_opt['filetypes'] = [('text files', '.txt'), ('db files', '.db')]
     self.file_opt['parent'] = self.master
     self.file_opt['title'] = 'Open file'
+   
+    self.file_opt_DB = self.file_opt
+    self.file_opt_DB['filetypes'] = [('db files', '.db')]
     
     self.menubar = Menu(parent)
     parent.config(menu=self.menubar)
@@ -62,7 +66,7 @@ class GUI():
     self.createButton(parent=parent, label="View O/P db file", command=self.viewdb, col=2, row=3, padx=20, pady=20, bd=3)
     self.createButton(parent=parent, label="     Quit       ", command=self.quit, col=3, row=3, padx=20, pady=20, bd=3)
     
-    
+    '''
     self.sensorDropdown = Pmw.ComboBox(parent,
                 label_text = 'Select SPND No.',
                 labelpos = 'n',
@@ -70,6 +74,13 @@ class GUI():
                 scrolledlist_items = self.sensorNames,
         )
     self.sensorDropdown.grid(column=5, row=0)
+    '''
+    self.scrollbar = Scrollbar(parent)
+    self.scrollbar.grid(column=5, row=0)
+    self.sensorListbox = Listbox(parent, height=5, width=9, yscrollcommand=self.scrollbar.set)
+    self.sensorListbox.grid(column=5, row=0, sticky=SW)
+    self.scrollbar.configure(command=self.sensorListbox.yview)
+    
     
     self.createButton(parent=parent, label="Select DB", command=self.getDB, col=5, row=1)
     self.createButton(parent=parent, label="Plot Sensor Data", command=self.viewPlot, col=5, row=3, padx=20, pady=20, bd=3)
@@ -109,10 +120,15 @@ class GUI():
       self.label_str2.set(os.path.split(self.filename2)[1])
   
   def getDB(self):
-    pass
+    self.databaseName = askopenfilename(**self.file_opt_DB)
+    if self.databaseName != ():
+      self.sensorNames = get_columnNames(self.databaseName)
+      for item in self.sensorNames:
+        self.sensorListbox.insert(END, item)
   
   def viewPlot(self):
-    pass
+    print(self.sensorListbox.curselection())
+    operation = ["python3.2", ""]
     
   
   def viewdb(self):
