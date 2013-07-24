@@ -1,8 +1,15 @@
 from tkinter import *
 from tkinter.filedialog import *
+import Pmw
 from name_creator import create_database_name, join_database_name
 import os
+import sys
 import subprocess
+
+dir_scr_GUI = os.path.join(os.getcwd(), "scr_GUI")
+sys.path.insert(0, dir_scr_GUI)
+
+from get_SPND_col import get_columnNames, get_data
 
 
 class GUI():
@@ -12,6 +19,7 @@ class GUI():
   row_counter = 0
   filename1 = ""
   filename2 = ""
+  sensorNames = ()
   
   def __init__(self, parent):
     self.master = parent
@@ -45,14 +53,27 @@ class GUI():
     
     self.createLabel(parent=self.master, col=1, row=0, variable=self.label_str1)
     self.createLabel(parent=self.master, col=1, row=1, variable=self.label_str2)
-    self.createLabel(parent=self.master, col=3, row=0, variable=self.label_str3, rowspan=2, sticky=W)
+    self.createLabel(parent=self.master, col=2, row=1, variable=self.label_str3, sticky=N)
     
-    self.createLabel(parent=parent, label="Output File :", col=2, row=0, rowspan=2, sticky=E)
+    self.createLabel(parent=parent, label="Output File :", col=2, row=0, sticky=S)
     
     self.createButton(parent=parent, label="Create & Join DB", command=self.createjoin, col=0, row=3, padx=20, pady=20, bd=3)    
     self.createButton(parent=parent, label="    Join DB     ", command=self.join, col=1, row=3, padx=20, pady=20, bd=3)
     self.createButton(parent=parent, label="View O/P db file", command=self.viewdb, col=2, row=3, padx=20, pady=20, bd=3)
     self.createButton(parent=parent, label="     Quit       ", command=self.quit, col=3, row=3, padx=20, pady=20, bd=3)
+    
+    
+    self.sensorDropdown = Pmw.ComboBox(parent,
+                label_text = 'Select SPND No.',
+                labelpos = 'n',
+                selectioncommand = self.viewPlot,
+                scrolledlist_items = self.sensorNames,
+        )
+    self.sensorDropdown.grid(column=5, row=0)
+    
+    self.createButton(parent=parent, label="Select DB", command=self.getDB, col=5, row=1)
+    self.createButton(parent=parent, label="Plot Sensor Data", command=self.viewPlot, col=5, row=3, padx=20, pady=20, bd=3)
+    
     
   def createLabel(self, parent, col, row, font=None, variable=None, label=None, padx=None, pady=None, columnspan=None, rowspan=None, sticky=None):
     if variable==None:
@@ -86,7 +107,14 @@ class GUI():
     self.filename2 = askopenfilename(**self.file_opt)
     if self.filename2 != ():
       self.label_str2.set(os.path.split(self.filename2)[1])
+  
+  def getDB(self):
+    pass
+  
+  def viewPlot(self):
+    pass
     
+  
   def viewdb(self):
     subprocess.call(["sqlitebrowser", "{}".format(os.path.join(os.path.split(self.filename1)[0], self.label_str3.get())) ])
         
@@ -101,6 +129,6 @@ class GUI():
     
 if __name__ == "__main__":
   root = Tk()
-  root.geometry("650x200+400+100")
+  root.geometry("850x200+400+100")
   app = GUI(root)
   root.mainloop()
