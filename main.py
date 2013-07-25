@@ -3,7 +3,8 @@
 import argparse
 import os
 import sys
-from create_database import read_SPND
+import subprocess
+from create_database import read_SPND_V, read_SPND_Co
 from join_database import join_database
 from name_creator import create_database_name, join_database_name
 from view_SPND_plot import plot 
@@ -11,31 +12,49 @@ from view_SPND_plot import plot
 
 parser = argparse.ArgumentParser(description='Create two database and joining then together \
                                               or join two already created databse')
-group = parser.add_mutually_exclusive_group()
-#parser.add_argument("filename_1", help='Input file name-1 related to sensor data')
-#parser.add_argument("filename_2", help='Input file name-2 related to sensor data')
 
-group.add_argument("--createjoin", help='Create two database and join them together \
+group1 = parser.add_mutually_exclusive_group(required=True)
+group1.add_argument("--createjoin", help='Create two database and join them together \
                    - For this input two sensor data file', nargs=2)
-
-group.add_argument("--join", help='Join two already created database \
+                   
+group1.add_argument("--join", help='Join two already created database \
                    - For this input two database file', nargs=2)
-
-group.add_argument("--plot", help="Generate single SPND sensor plot - \
+                   
+group1.add_argument("--plot", help="Generate single SPND sensor plot - \
                    For this input database file and the name of the sensor eg. --plot \
                    databaseFileName SPND29", nargs=2)
 
+group2 = parser.add_mutually_exclusive_group()
+group2.add_argument("-v", "--vanadium", help="If input sensor data file is of Vanadium", action='store_true')
+group2.add_argument("-c", "--cobalt", help="If input sensor data file is of Cobalt", action='store_true')
+                   
+                   
 args = parser.parse_args()
 
-if args.createjoin:
+if args.createjoin and args.vanadium:
   print("Reading files {}, {}............".format(args.createjoin[0], args.createjoin[1]))
   print("Creating Database - 1.............")
   databaseName1 = create_database_name(args.createjoin[0])
-  read_SPND(args.createjoin[0], databaseName1, "sensor")
+  read_SPND_V(args.createjoin[0], databaseName1, "sensor")
 
   print("Creating Database - 2.............")
-  databaseName2 = create_database_name(args.filename_2)
-  read_SPND(args.createjoin[1], databaseName2, "sensor")
+  databaseName2 = create_database_name(args.createjoin[1])
+  read_SPND_V(args.createjoin[1], databaseName2, "sensor")
+
+  databaseName3 = join_database_name(databaseName1, databaseName2)
+  print("Joining Database - 1 and Database -2..............")
+  join_database(databaseName1, databaseName2, databaseName3)
+  print("Creating & Joining Database: Completed..........")
+
+if args.createjoin and args.cobalt:
+  print("Reading files {}, {}............".format(args.createjoin[0], args.createjoin[1]))
+  print("Creating Database - 1.............")
+  databaseName1 = create_database_name(args.createjoin[0])
+  read_SPND_Co(args.createjoin[0], databaseName1, "sensor")
+
+  print("Creating Database - 2.............")
+  databaseName2 = create_database_name(args.createjoin[1])
+  read_SPND_Co(args.createjoin[1], databaseName2, "sensor")
 
   databaseName3 = join_database_name(databaseName1, databaseName2)
   print("Joining Database - 1 and Database -2..............")
@@ -56,3 +75,6 @@ elif args.plot:
   print("Generating {} Plot.........".format(args.plot[1]))
   plot(args.plot[0], args.plot[1])
   print("Done..")
+  
+else:
+  print("Pass --help option for more information")

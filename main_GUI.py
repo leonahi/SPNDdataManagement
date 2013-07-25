@@ -31,8 +31,10 @@ class GUI():
     self.file_opt['parent'] = self.master
     self.file_opt['title'] = 'Open file'
    
-    self.file_opt_DB = self.file_opt
+    self.file_opt_DB['defaultextension'] = '.db'
     self.file_opt_DB['filetypes'] = [('db files', '.db')]
+    self.file_opt_DB['parent'] = self.master
+    self.file_opt['title'] = 'Open file'
     
     self.menubar = Menu(parent)
     parent.config(menu=self.menubar)
@@ -102,12 +104,14 @@ class GUI():
     
   def openfile1(self):
     self.filename1 = askopenfilename(**self.file_opt)
-    if self.filename1 != ():
+    print(self.filename1)
+    if self.filename1 != () and self.filename1 != "":
       self.label_str1.set(os.path.split(self.filename1)[1])
     
   def openfile2(self):
     self.filename2 = askopenfilename(**self.file_opt)
-    if self.filename2 != ():
+    print(self.filename2)
+    if self.filename2 != () and self.filename2 != "":
       self.label_str2.set(os.path.split(self.filename2)[1])
   
   def getDB(self):

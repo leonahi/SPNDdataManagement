@@ -39,23 +39,15 @@ def read_database(databaseName):
 
     #mask = mask.transpose()
     
-    
-    cur_new.execute("SELECT SPND50 FROM sensor")
-    
-    sensor29 = cur_new.fetchall()
-    sensor29 = array(sensor29)
-    
-    plt.plot(sensor29, 'ro')
-    plt.show()
-    
+        
     clusterid, error, nfound = kcluster(data=Data, nclusters=7, 
                                         mask=mask, weight=None,
-                                        transpose=1, npass=1,
+                                        transpose=1, npass=20,
                                         method='a', dist='c', initialid=None)
                                         
-    #print(clusterid)
-    #print(nfound)
-    #print(error)
+    print(clusterid)
+    print(nfound)
+    print(error)
     
     #SPNDtoClusterId = {col:cid for col, cid in zip(columnNames[3:], clusterid)}
     
