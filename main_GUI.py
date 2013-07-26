@@ -119,8 +119,9 @@ class GUI():
       self.label_str2.set(os.path.split(self.filename2)[1])
   
   def getDB(self):
-    self.databaseName = askopenfilename(**self.file_opt_DB)
-    if self.databaseName != ():
+    dbName = askopenfilename(**self.file_opt_DB)
+    if dbName != () and dbName != "":
+      self.databaseName = dbName
       self.sensorNames = get_columnNames(self.databaseName)
       self.sensorListbox.delete(0, END)
       for item in self.sensorNames:
