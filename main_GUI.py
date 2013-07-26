@@ -1,10 +1,10 @@
 from tkinter import *
 from tkinter.filedialog import *
 import Pmw
-from name_creator import create_database_name, join_database_name
 import os
 import sys
 import subprocess
+from name_creator import create_database_name, join_database_name
 
 dir_scr = os.path.join(os.getcwd(), "scr")
 sys.path.insert(0, dir_scr)
@@ -59,9 +59,9 @@ class GUI():
     
     self.createLabel(parent=self.master, col=1, row=0, variable=self.label_str1)
     self.createLabel(parent=self.master, col=1, row=1, variable=self.label_str2)
-    self.createLabel(parent=self.master, col=2, row=1, variable=self.label_str3, sticky=N)
+    self.createLabel(parent=self.master, col=3, row=1, variable=self.label_str3, sticky=N)
     
-    self.createLabel(parent=parent, label="Output File :", col=2, row=0, sticky=S)
+    self.createLabel(parent=parent, label="Output File :", col=3, row=0, sticky=S)
     
     self.createButton(parent=parent, label="Create & Join DB", command=self.createjoin, col=0, row=3, padx=20, pady=20, bd=3)    
     self.createButton(parent=parent, label="    Join DB     ", command=self.join, col=1, row=3, padx=20, pady=20, bd=3)
@@ -69,14 +69,18 @@ class GUI():
     self.createButton(parent=parent, label="     Quit       ", command=self.quit, col=3, row=3, padx=20, pady=20, bd=3)
     
     self.scrollbar = Scrollbar(parent)
-    self.scrollbar.grid(column=5, row=0)
-    self.sensorListbox = Listbox(parent, height=5, width=9, yscrollcommand=self.scrollbar.set)
-    self.sensorListbox.grid(column=5, row=0, sticky=SW)
+    self.scrollbar.grid(column=5, row=0, sticky=E)
+    self.sensorListbox = Listbox(parent, height=5, width=17, yscrollcommand=self.scrollbar.set)
+    self.sensorListbox.grid(column=5, row=0)
     self.scrollbar.configure(command=self.sensorListbox.yview)
     
     
     self.createButton(parent=parent, label="Select DB", command=self.getDB, col=5, row=1)
     self.createButton(parent=parent, label="Plot Sensor Data", command=self.viewPlot, col=5, row=3, padx=20, pady=20, bd=3)
+    
+    self.whichSensor = StringVar()
+    Radiobutton(parent, text="Vanadium", variable=self.whichSensor, value="-v").grid(column=2, row=0, sticky=SW)
+    Radiobutton(parent, text="Cobalt", variable=self.whichSensor, value="-c").grid(column=2, row=1, sticky=NW)
     
     
   def createLabel(self, parent, col, row, font=None, variable=None, label=None, padx=None, pady=None, columnspan=None, rowspan=None, sticky=None):
@@ -118,6 +122,7 @@ class GUI():
     self.databaseName = askopenfilename(**self.file_opt_DB)
     if self.databaseName != ():
       self.sensorNames = get_columnNames(self.databaseName)
+      self.sensorListbox.delete(0, END)
       for item in self.sensorNames:
         self.sensorListbox.insert(END, item)
   
@@ -132,6 +137,7 @@ class GUI():
         
   def compute(self):
     operation = ["python3.2", "main.py"]
+    operation.append(self.whichSensor.get())
     operation.append(self.opt)
     operation.append(self.filename1)
     operation.append(self.filename2)

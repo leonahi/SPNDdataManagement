@@ -44,9 +44,9 @@ if args.createjoin and args.vanadium:
   databaseName3 = join_database_name(databaseName1, databaseName2)
   print("Joining Database - 1 and Database -2..............")
   join_database(databaseName1, databaseName2, databaseName3)
-  print("Creating & Joining Database: Completed..........")
+  print("Creating & Joining Database: Completed")
 
-if args.createjoin and args.cobalt:
+elif args.createjoin and args.cobalt:
   print("Reading files {}, {}............".format(args.createjoin[0], args.createjoin[1]))
   print("Creating Database - 1.............")
   databaseName1 = create_database_name(args.createjoin[0])
@@ -59,7 +59,7 @@ if args.createjoin and args.cobalt:
   databaseName3 = join_database_name(databaseName1, databaseName2)
   print("Joining Database - 1 and Database -2..............")
   join_database(databaseName1, databaseName2, databaseName3)
-  print("Creating & Joining Database: Completed..........")
+  print("Creating & Joining Database: Completed")
 
 elif args.join:
   print("Reading files {}, {}............".format(args.join[0], args.join[1]))
