@@ -24,7 +24,7 @@ class GUI():
   
   def __init__(self, parent):
     self.master = parent
-    self.master.title("DBCreator")
+    self.master.title("Double-Dragon")
     
     self.file_opt['defaultextension'] = '.txt'
     self.file_opt['filetypes'] = [('text files', '.txt'), ('db files', '.db')]

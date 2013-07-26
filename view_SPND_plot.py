@@ -11,6 +11,7 @@ from get_SPND_col import get_data
 def plot(databaseName, sensorName):
   data = get_data(databaseName, sensorName)
   data = array(data)
+  plt.title("{} data".format(sensorName))
   plt.plot(data)
   plt.ylabel('Flux')
   plt.xlabel('Time in min')

@@ -54,7 +54,7 @@ def read_SPND_V(fileName, databaseName, tableName):
         lst = [re.sub(r'\b{0}\b'.format(pattern), '-1', item) for item in lst[1:]]        # replace any occurrence of BAD, NORPLY with -1
         if int(sensorNumber) > 106:
           sensorData = tuple(lst)
-        else:	  
+        else:
           sensorData = tuple(lst[1:])  
         data = date_time + sensorData
         cur.execute("INSERT INTO {0} (Date, Time, {1}) VALUES (?, ?, {2})".format(tableName, sensorList, ques), data)	  
@@ -128,7 +128,7 @@ def read_SPND_Co(fileName, databaseName, tableName):
     
 if __name__ == '__main__':
   pass
-  #read_SPND_Co("10 SPND1-7.txt", "10SPND1-7.db", "sensor")  
+  read_SPND_V("11 F123-130.txt", "11F123-130.db", "sensor")  
   
   
   
