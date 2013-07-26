@@ -5,6 +5,7 @@ import os
 import sys
 import subprocess
 from create_database import read_SPND_V, read_SPND_Co
+from append_database import append_database
 from join_database import join_database
 from name_creator import create_database_name, join_database_name
 from view_SPND_plot import plot 
@@ -14,6 +15,7 @@ parser = argparse.ArgumentParser(description='Create two database and joining th
                                               or join two already created databse')
 
 group1 = parser.add_mutually_exclusive_group(required=True)
+group1.add_argument("--append", help="Append new data from another database", nargs=2)
 group1.add_argument("--createjoin", help='Create two database and join them together \
                    - For this input two sensor data file', nargs=2)
                    
@@ -70,6 +72,11 @@ elif args.join:
   print("Joining Database - 1 and Database -2..............")
   join_database(args.join[0], args.join[1], databaseName3)
   print("Joining Database: Completed..........")
+  
+elif args.append:
+  print("Inserting new data into database {}".format(args.append[0]))
+  append_database(args.append[0], args.append[1])
+  print("Done..")
   
 elif args.plot:
   print("Generating {} Plot.........".format(args.plot[1]))
