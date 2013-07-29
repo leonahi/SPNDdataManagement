@@ -13,6 +13,7 @@ def plot(databaseName, sensorName):
   data = array(data)
   plt.title("{} data".format(sensorName))
   plt.plot(data)
+  plt.axis([0,15000,0,100])
   plt.ylabel('Flux')
   plt.xlabel('Time in min')
   plt.show()

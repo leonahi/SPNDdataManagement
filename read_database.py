@@ -23,9 +23,9 @@ def read_database(databaseName):
     cur_new.execute("SELECT * FROM sensor")
     rows = cur_new.fetchall()
     
-    rows = [row[3:] for row in rows]
+    ROW = [row[3:] for row in rows]
     
-    Data = matrix(rows)
+    Data = matrix(ROW)
     
     rc = Data.shape
     mask = ones((rc[0], rc[1]))    
@@ -42,7 +42,7 @@ def read_database(databaseName):
         
     clusterid, error, nfound = kcluster(data=Data, nclusters=7, 
                                         mask=mask, weight=None,
-                                        transpose=1, npass=20,
+                                        transpose=1, npass=1,
                                         method='a', dist='c', initialid=None)
                                         
     print(clusterid)
@@ -51,6 +51,16 @@ def read_database(databaseName):
     
     #SPNDtoClusterId = {col:cid for col, cid in zip(columnNames[3:], clusterid)}
     
+    clusterIdtoSPND = {}
+    lst = []
+    for cid in clusterid:
+      clusterIdtoSPND[cid] = lst
+
+    for cid, col in zip(clusterid, columnNames[3:]):
+      clusterIdtoSPND[cid].append(col)
+    
+    print(clusterIdtoSPND)
+    #clusterIdtoSPND = { for col, cid in zip(columnNames[3:], clusterid)}
     
     
     #SPNDtoClusterId = {print("{} : {}".format(col,cid)) for col, cid in zip(columnNames[3:], clusterid)}
@@ -64,4 +74,4 @@ def read_database(databaseName):
     #print(mask)
     
 if __name__ == '__main__':
-  read_database("SPND_Database/10F29-130.db")
+  read_database("SPND_Database/Vanadium/10F29-130.db")
