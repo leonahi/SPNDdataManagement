@@ -59,7 +59,6 @@ def read_database(databaseName):
     for cid, col in zip(clusterid, columnNames[3:]):
       clusterIdtoSPND[cid].append(col)
     
-    print(clusterIdtoSPND)
     #clusterIdtoSPND = { for col, cid in zip(columnNames[3:], clusterid)}
     
     

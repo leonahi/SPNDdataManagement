@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from numpy import *
+import numpy
 import os
 import sys
 
@@ -10,10 +10,14 @@ from get_SPND_col import get_data
   
 def plot(databaseName, sensorName):
   data = get_data(databaseName, sensorName)
-  data = array(data)
+  data = numpy.array(data).astype(float)
+  
+  if sensorName[0] == 'V':
+    data = (numpy.divide(data,numpy.max(numpy.abs(data))))*100
+  
   plt.title("{} data".format(sensorName))
   plt.plot(data)
-  plt.axis([0,15000,0,100])
+  plt.axis([0,16000,0,100])
   plt.ylabel('Flux')
   plt.xlabel('Time in min')
   plt.show()
