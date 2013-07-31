@@ -1,5 +1,4 @@
 import sqlite3 as lite
-import matplotlib.pyplot as plt 
 from Pycluster import *
 from numpy import *
 
@@ -39,7 +38,7 @@ def read_database(databaseName):
 
     #mask = mask.transpose()
     
-        
+    '''    
     clusterid, error, nfound = kcluster(data=Data, nclusters=7, 
                                         mask=mask, weight=None,
                                         transpose=1, npass=1,
@@ -71,6 +70,6 @@ def read_database(databaseName):
     #print(Data[0,0])
     #print(Data.shape)
     #print(mask)
-    
+    '''
 if __name__ == '__main__':
   read_database("SPND_Database/Vanadium/10F29-130.db")

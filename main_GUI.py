@@ -1,13 +1,14 @@
 from tkinter import *
 from tkinter.filedialog import *
+import tkinter.ttk as ttk
 import Pmw
 import os
 import sys
 import subprocess
 from name_creator import create_database_name, join_database_name
 
-dir_scr = os.path.join(os.getcwd(), "scr")
-sys.path.insert(0, dir_scr)
+dir_src = os.path.join(os.getcwd(), "src")
+sys.path.insert(0, dir_src)
 
 from get_SPND_col import get_columnNames, get_data
 
@@ -83,6 +84,9 @@ class GUI():
     Radiobutton(parent, text="Cobalt", variable=self.whichSensor, value="-c").grid(column=2, row=1, sticky=NW)
     
     
+    #self.progressbar = ttk.Progressbar(self.master, orient=HORIZONTAL, length=200, mode='indeterminate')
+    #self.progressbar.grid(column=0, row=4)
+    
   def createLabel(self, parent, col, row, font=None, variable=None, label=None, padx=None, pady=None, columnspan=None, rowspan=None, sticky=None):
     if variable==None:
       l = Label(parent, text=label, relief=GROOVE, width=10, font=None)
@@ -135,7 +139,13 @@ class GUI():
       
   def viewdb(self):
     subprocess.call(["sqlitebrowser", "{}".format(os.path.join(os.path.split(self.filename1)[0], self.label_str3.get())) ])
-        
+  
+  def start_stop_bar(self, op):
+    if op == 'start':
+      self.progressbar.start(10)
+    else:
+      self.progressbar.stop()
+  
   def compute(self):
     operation = ["python3.2", "main.py"]
     operation.append(self.whichSensor.get())
@@ -148,6 +158,6 @@ class GUI():
     
 if __name__ == "__main__":
   root = Tk()
-  root.geometry("850x200+400+100")
+  root.geometry("850x250+400+100")
   app = GUI(root)
   root.mainloop()

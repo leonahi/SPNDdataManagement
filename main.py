@@ -4,12 +4,16 @@ import argparse
 import os
 import sys
 import subprocess
+
+from init_dd import initialize
+
 from create_database import read_SPND_V, read_SPND_Co
 from append_database import append_database
 from join_database import join_database
 from name_creator import create_database_name, join_database_name
 from view_SPND_plot import plot 
 
+#initialize()
 
 parser = argparse.ArgumentParser(description='Create two database and joining then together \
                                               or join two already created databse')

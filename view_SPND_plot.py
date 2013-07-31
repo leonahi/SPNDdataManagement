@@ -3,8 +3,8 @@ import numpy
 import os
 import sys
 
-dir_scr = os.path.join(os.getcwd(), "scr")
-sys.path.insert(0, dir_scr)
+dir_src = os.path.join(os.getcwd(), "src")
+sys.path.insert(0, dir_src)
 
 from get_SPND_col import get_data  
   

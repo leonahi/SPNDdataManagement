@@ -7,6 +7,9 @@
 # Any file ending with .txt will be ignored
 *.txt
 
+# Any file ending with .tmp will be ignored
+*.tmp
+
 # Ignore any file inside SPND_Data directory
 SPND_Data/
 
