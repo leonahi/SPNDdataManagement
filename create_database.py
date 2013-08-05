@@ -128,7 +128,7 @@ def read_SPND_Co(fileName, databaseName, tableName):
     
 if __name__ == '__main__':
   pass
-  read_SPND_V("20 F123-130.txt", "20F123-130.db", "sensor")  
+  read_SPND_V("SPND_Data/20 July/20 F107-114.txt", "20F107-114.db", "sensor")  
   
   
   

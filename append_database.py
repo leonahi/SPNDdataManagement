@@ -33,4 +33,4 @@ def append_database(databaseName1, databaseName2, sensorType=None):
       
 if __name__ == "__main__":
   pass
-  append_database("10F29-130.db", "11F29-130.db")
+  #append_database("10F29-130.db", "11F29-130.db")

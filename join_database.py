@@ -69,3 +69,4 @@ def join_database(database1Name, database2Name, database3Name):
       
 if __name__ == '__main__':
   pass
+  #join_database("SPND_Database/10F29-130.db", "SPND_Database/10SPND1-42.db", "F29-130_SPND1-42.db")
